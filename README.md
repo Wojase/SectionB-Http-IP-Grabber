@@ -26,7 +26,9 @@ A mock "file sharing service" that actually:
 - 🔥 Premium trolling experience
 
 ## 📸 Preview
-![Preview](https://i.imgur.com/fakeimage.jpg) *(example image)*
+![Main Page](https://i.imgur.com/3KqoEGj.png)
+![IP Page](https://i.imgur.com/eLyLtsQ.png)
+![Discord Webhook](https://i.imgur.com/fReMpjV.png)
 
 ## 🚀 Setup
 1. Replace the Discord webhook URL in the script
